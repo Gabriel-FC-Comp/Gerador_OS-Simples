@@ -4,6 +4,8 @@
  */
 package ui;
 
+import javax.swing.DefaultListModel;
+import os_generator.ItemOS;
 import os_generator.OS_Generator;
 
 /**
@@ -11,7 +13,10 @@ import os_generator.OS_Generator;
  * @author gabif
  */
 public class FactoryUI extends javax.swing.JFrame {
-
+    
+    DefaultListModel modelProdutos = new DefaultListModel();
+    DefaultListModel modelServicos = new DefaultListModel();
+    
     /**
      * Creates new form Factory
      */
@@ -279,8 +284,51 @@ public class FactoryUI extends javax.swing.JFrame {
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
+        ItemOS novo;
+        if (produtoButton.isSelected()){
+            novo = geraItem("Produto");
+            OS_Generator.produtos.add(novo);
+            modelProdutos.addElement(novo.toString());
+            atualizaProdutos();
+        }else if(servicoButton.isSelected()){
+            novo = geraItem("Serviço");
+            OS_Generator.servicos.add(novo);
+            modelServicos.addElement(novo.toString());
+            atualizaServicos();
+        }else{
+            // ADD ERROR
+        }// if-else
+        resetaCampos();
+        atualizaTT();
     }//GEN-LAST:event_addItemButtonActionPerformed
-
+    
+    private void resetaCampos(){
+        qtdeField.setText("");
+        descricaoField.setText("");
+        valorField.setText("");
+        tipoItems.clearSelection();
+    }
+    
+    private ItemOS geraItem(String tipo){
+        return new ItemOS(Integer.parseInt(qtdeField.getText()),
+                descricaoField.getText(), Float.parseFloat(valorField.getText()),
+                tipo);
+    }
+    
+    private void atualizaServicos(){        
+        servicosList.setModel(modelServicos);
+    }
+    
+    private void atualizaProdutos(){
+        produtosList.setModel(modelProdutos);
+    }
+    
+    private void atualizaTT(){
+        totalProdLabel.setText("R$"+OS_Generator.getTTprodutos());
+        totalServLabel.setText("R$"+OS_Generator.getTTservicos());
+        totalLabel.setText("Total: R$"+OS_Generator.getTT());
+    }
+    
     private void servicoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicoButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_servicoButtonActionPerformed
@@ -288,17 +336,31 @@ public class FactoryUI extends javax.swing.JFrame {
     private void editaProdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editaProdButtonActionPerformed
         // TODO add your handling code here:
         if(temProdSelecionado()){
-            
-            produtosList.remove(produtosList.getSelectedIndex());
+            int index = produtosList.getSelectedIndex();
+            ItemOS item = OS_Generator.produtos.remove(index);
+            modelProdutos.remove(index);
+            qtdeField.setText(Integer.toString(item.getQuantidade()));
+            descricaoField.setText(item.getDescricao());
+            valorField.setText(Float.toString(item.getValorUN()));
+            tipoItems.clearSelection();
         }
+        atualizaProdutos();
+        atualizaTT();
     }//GEN-LAST:event_editaProdButtonActionPerformed
 
     private void editaServButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editaServButtonActionPerformed
         // TODO add your handling code here:
         if(temSerSelecionado()){
-            
-            servicosList.remove(servicosList.getSelectedIndex());
+            int index = servicosList.getSelectedIndex();
+            ItemOS item = OS_Generator.servicos.remove(index);
+            modelServicos.remove(index);
+            qtdeField.setText(Integer.toString(item.getQuantidade()));
+            descricaoField.setText(item.getDescricao());
+            valorField.setText(Float.toString(item.getValorUN()));
+            tipoItems.clearSelection();
         }
+        atualizaServicos();
+        atualizaTT();
     }//GEN-LAST:event_editaServButtonActionPerformed
 
     private void exportaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportaButtonActionPerformed
@@ -314,33 +376,27 @@ public class FactoryUI extends javax.swing.JFrame {
     private void excluiProdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluiProdButtonActionPerformed
         // TODO add your handling code here:
         if(temProdSelecionado()){
-            produtosList.remove(produtosList.getSelectedIndex());
+            modelProdutos.remove(produtosList.getSelectedIndex());
+            OS_Generator.produtos.remove(produtosList.getSelectedIndex());
         }
+        atualizaProdutos();
     }//GEN-LAST:event_excluiProdButtonActionPerformed
 
     private void excluiServButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluiServButtonActionPerformed
         // TODO add your handling code here:
         if(temSerSelecionado()){
-            servicosList.remove(servicosList.getSelectedIndex());
+            modelServicos.remove(servicosList.getSelectedIndex());
+            OS_Generator.servicos.remove(servicosList.getSelectedIndex());
         }
+        atualizaServicos();
     }//GEN-LAST:event_excluiServButtonActionPerformed
     
     public boolean temProdSelecionado(){
-        if(!produtosList.isSelectionEmpty()){
-           if(produtosList.getSelectedIndex() != 0){
-               return true;
-           } 
-        }
-        return false;
+        return !produtosList.isSelectionEmpty();
     }
     
     public boolean temSerSelecionado(){
-        if(!servicosList.isSelectionEmpty()){
-           if(servicosList.getSelectedIndex() != 0){
-               return true;
-           } 
-        }
-        return false;
+        return !servicosList.isSelectionEmpty();
     }
     
     /**

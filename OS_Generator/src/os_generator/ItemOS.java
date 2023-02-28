@@ -4,11 +4,13 @@
  */
 package os_generator;
 
+import java.awt.Component;
+
 /**
  *
  * @author gabif
  */
-public class ItemOS {
+public class ItemOS{
     
     private  int quantidade;
     private String descricao;
@@ -63,5 +65,13 @@ public class ItemOS {
     public float getValorTT() {
         return valorTT;
     }
+
+    @Override
+    public String toString() {
+        return getQuantidade() + " |-| " + getDescricao() + " |-| " + 
+                getValorUN() + " |-| " + getValorTT();
+    }
+    
+    
     
 }
