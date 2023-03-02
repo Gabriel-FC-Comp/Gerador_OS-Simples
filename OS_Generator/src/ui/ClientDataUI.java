@@ -4,6 +4,7 @@
  */
 package ui;
 
+import javax.swing.JOptionPane;
 import os_generator.OS_Generator;
 
 /**
@@ -48,15 +49,15 @@ public class ClientDataUI extends javax.swing.JFrame {
 
         titleLabel.setText("Informações do Cliente e Veículo");
 
-        clienteLabel.setText("Nome Cliente:");
+        clienteLabel.setText("Nome Cliente:*");
 
         condutorLabel.setText("Nome Condutor:");
 
-        veiculoLabel.setText("Veículo:");
+        veiculoLabel.setText("Veículo:*");
 
-        placaLabel.setText("Placa:");
+        placaLabel.setText("Placa:*");
 
-        anoLabel.setText("Ano");
+        anoLabel.setText("Ano:*");
 
         motorLabel.setText("Motor:");
 
@@ -160,30 +161,40 @@ public class ClientDataUI extends javax.swing.JFrame {
 
     private void avancarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avancarButtonActionPerformed
         // TODO add your handling code here:
-        OS_Generator.clientData.setVisible(false);
-        OS_Generator.factory.setVisible(true);
-        salvaDados();
-    }//GEN-LAST:event_avancarButtonActionPerformed
-    
-    private void salvaDados(){
-        
-        int ano = 0000;
-        
-        try{
-            ano = Integer.parseInt(this.anoField.getText());
-        }catch(NumberFormatException e){
-            // A criar janela de erro
+
+        if (clientNameField.getText().isBlank() || veiculoField.getText().isBlank()
+                || placaField.getText().isBlank() || anoField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null,
+                    "Warning - Preencha todos os campos obrigatórios marcados com *",
+                    "Warning", 0);
+        } else {
+            salvaDados();
         }
-        
-        OS_Generator.atualizaCliente(this.clientNameField.getText(), 
-                this.condutorNameField.getText(), 
-                this.veiculoField.getText(), 
-                this.placaField.getText(), 
-                ano, 
-                this.motorField.getText());
+
+
+    }//GEN-LAST:event_avancarButtonActionPerformed
+
+    private void salvaDados() {
+
+        try {
+            int ano = Integer.parseInt(this.anoField.getText());
+
+            OS_Generator.atualizaCliente(this.clientNameField.getText(),
+                    this.condutorNameField.getText(),
+                    this.veiculoField.getText(),
+                    this.placaField.getText(),
+                    ano,
+                    this.motorField.getText());
+            OS_Generator.clientData.setVisible(false);
+            OS_Generator.factory.setVisible(true);
+        } catch (NumberFormatException e) {
+            System.err.println("Erro - O ano informado é inválido!");
+            JOptionPane.showMessageDialog(null, "Erro - O ano informado é inválido", "Warning - Error", 0);
+        }// try-catch
+
     }
-    
-    public void resetaCampos(){
+
+    public void resetaCampos() {
         this.clientNameField.setText("");
         this.condutorNameField.setText("");
         this.veiculoField.setText("");
@@ -191,7 +202,7 @@ public class ClientDataUI extends javax.swing.JFrame {
         this.anoField.setText("");
         this.motorField.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -208,22 +219,16 @@ public class ClientDataUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientDataUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientDataUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientDataUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ClientDataUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ClientDataUI().setVisible(false);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ClientDataUI().setVisible(false);
         });
     }
 

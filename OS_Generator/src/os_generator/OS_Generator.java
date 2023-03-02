@@ -48,4 +48,5 @@ public class OS_Generator {
     public static float getTT(){
         return getTTprodutos()+getTTservicos();
     }
+    
 }

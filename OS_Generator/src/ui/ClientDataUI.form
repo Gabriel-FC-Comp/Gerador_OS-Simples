@@ -113,7 +113,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="clienteLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nome Cliente:"/>
+        <Property name="text" type="java.lang.String" value="Nome Cliente:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="condutorLabel">
@@ -123,17 +123,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="veiculoLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ve&#xed;culo:"/>
+        <Property name="text" type="java.lang.String" value="Ve&#xed;culo:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="placaLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Placa:"/>
+        <Property name="text" type="java.lang.String" value="Placa:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="anoLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ano"/>
+        <Property name="text" type="java.lang.String" value="Ano:*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="motorLabel">

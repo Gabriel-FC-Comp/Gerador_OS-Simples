@@ -5,6 +5,7 @@
 package ui;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import os_generator.ItemOS;
 import os_generator.OS_Generator;
 
@@ -64,6 +65,12 @@ public class FactoryUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        qtdeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qtdeFieldActionPerformed(evt);
+            }
+        });
+
         tipoItems.add(servicoButton);
         servicoButton.setText("Serviço");
         servicoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -82,13 +89,13 @@ public class FactoryUI extends javax.swing.JFrame {
             }
         });
 
-        tipoLabel.setText("Tipo:");
+        tipoLabel.setText("Tipo:*");
 
-        qtdeLabel.setText("Quantidade:");
+        qtdeLabel.setText("Quantidade:*");
 
-        descricaoLabel.setText("Descrição:");
+        descricaoLabel.setText("Descrição:*");
 
-        valorLabel.setText("Valor Unitário:");
+        valorLabel.setText("Valor Unitário:*");
 
         infoTitleLabel.setText("Informações do Item");
 
@@ -285,21 +292,43 @@ public class FactoryUI extends javax.swing.JFrame {
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
         ItemOS novo;
-        if (produtoButton.isSelected()){
-            novo = geraItem("Produto");
-            OS_Generator.produtos.add(novo);
-            modelProdutos.addElement(novo.toString());
-            atualizaProdutos();
-        }else if(servicoButton.isSelected()){
-            novo = geraItem("Serviço");
-            OS_Generator.servicos.add(novo);
-            modelServicos.addElement(novo.toString());
-            atualizaServicos();
-        }else{
-            // ADD ERROR
-        }// if-else
-        resetaCampos();
-        atualizaTT();
+        
+        try{
+            
+            if(descricaoField.getText().isBlank()){
+                JOptionPane.showMessageDialog(null, 
+                        "Warning - Preencha todos os campos obrigatórios marcados com *!", 
+                        "Warning", 0);
+            }else{
+                Integer.valueOf(qtdeField.getText().replaceFirst(",", "."));
+                Float.valueOf(valorField.getText().replaceFirst(",", "."));
+                
+                if (produtoButton.isSelected()){
+                    novo = geraItem("Produto");
+                    OS_Generator.produtos.add(novo);
+                    modelProdutos.addElement(novo.toString());
+                    atualizaProdutos();
+                }else if(servicoButton.isSelected()){
+                    novo = geraItem("Serviço");
+                    OS_Generator.servicos.add(novo);
+                    modelServicos.addElement(novo.toString());
+                    atualizaServicos();
+                }else{
+                    JOptionPane.showMessageDialog(null, 
+                            "Warning - Selecione o tipo do item a ser adicionado!", 
+                            "Warning", 0);
+                }// if-else
+                resetaCampos();
+            }// if-else
+             
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, 
+                    "Erro - Quantidade ou valor inválido!", 
+                    "Warning - Error", 0);
+        }finally{
+            atualizaTT();
+        }// try-catch
+       
     }//GEN-LAST:event_addItemButtonActionPerformed
     
     private void resetaCampos(){
@@ -311,8 +340,8 @@ public class FactoryUI extends javax.swing.JFrame {
     
     private ItemOS geraItem(String tipo){
         return new ItemOS(Integer.parseInt(qtdeField.getText()),
-                descricaoField.getText(), Float.parseFloat(valorField.getText()),
-                tipo);
+                descricaoField.getText(), 
+                Float.parseFloat(valorField.getText()), tipo);
     }
     
     private void atualizaServicos(){        
@@ -390,6 +419,10 @@ public class FactoryUI extends javax.swing.JFrame {
         }
         atualizaServicos();
     }//GEN-LAST:event_excluiServButtonActionPerformed
+
+    private void qtdeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtdeFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_qtdeFieldActionPerformed
     
     public boolean temProdSelecionado(){
         return !produtosList.isSelectionEmpty();

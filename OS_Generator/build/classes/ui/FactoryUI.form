@@ -160,6 +160,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="qtdeField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="qtdeFieldActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="descricaoField">
         </Component>
@@ -194,22 +197,22 @@
         </Component>
         <Component class="javax.swing.JLabel" name="tipoLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tipo:"/>
+            <Property name="text" type="java.lang.String" value="Tipo:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="qtdeLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Quantidade:"/>
+            <Property name="text" type="java.lang.String" value="Quantidade:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="descricaoLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o:"/>
+            <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="valorLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valor Unit&#xe1;rio:"/>
+            <Property name="text" type="java.lang.String" value="Valor Unit&#xe1;rio:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="infoTitleLabel">
