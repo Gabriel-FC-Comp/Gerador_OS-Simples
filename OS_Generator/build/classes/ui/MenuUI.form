@@ -29,11 +29,10 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="importButton" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="newOsButton" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="titleLabel" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="titleLabel" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="LogoPanel" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="importFontField" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="editOrgDataButton" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="48" max="32767" attributes="0"/>
           </Group>
@@ -42,30 +41,20 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               <Component id="LogoPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Component id="importFontField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="importButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="editOrgDataButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="newOsButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="importButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Importar O.S."/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importButtonActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="newOsButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Criar O.S."/>
@@ -94,9 +83,12 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JTextField" name="importFontField">
+    <Component class="javax.swing.JButton" name="editOrgDataButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar Dados da Empresa"/>
+      </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importFontFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editOrgDataButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

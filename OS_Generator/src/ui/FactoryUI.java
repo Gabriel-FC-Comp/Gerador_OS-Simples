@@ -394,6 +394,10 @@ public class FactoryUI extends javax.swing.JFrame {
 
     private void exportaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportaButtonActionPerformed
         // TODO add your handling code here:
+        OS_Generator.exportaArquivoTex(
+        JOptionPane.showInputDialog(null, 
+                "Insira o caminho onde o arquivo será salvo:", 
+                "OS_Generator", 0));
     }//GEN-LAST:event_exportaButtonActionPerformed
 
     private void voltarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButtonActionPerformed
@@ -448,23 +452,18 @@ public class FactoryUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FactoryUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FactoryUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FactoryUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FactoryUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FactoryUI().setVisible(false);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FactoryUI().setVisible(false);
         });
     }
 

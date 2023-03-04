@@ -15,10 +15,15 @@ public class MenuUI extends javax.swing.JFrame {
      */
     public MenuUI() {
         initComponents();
-        importButton.setVisible(false);
-        importFontField.setVisible(false);
     }
 
+    public void habilitaNewOSButton(){
+        OS_Generator.menu.newOsButton.setEnabled(true);
+    }
+    
+    public void desabilitaNewOSButton(){
+        OS_Generator.menu.newOsButton.setEnabled(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,21 +33,13 @@ public class MenuUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        importButton = new javax.swing.JButton();
         newOsButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
         LogoPanel = new javax.swing.JPanel();
-        importFontField = new javax.swing.JTextField();
+        editOrgDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 350));
-
-        importButton.setText("Importar O.S.");
-        importButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importButtonActionPerformed(evt);
-            }
-        });
 
         newOsButton.setText("Criar O.S.");
         newOsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -64,9 +61,10 @@ public class MenuUI extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        importFontField.addActionListener(new java.awt.event.ActionListener() {
+        editOrgDataButton.setText("Editar Dados da Empresa");
+        editOrgDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importFontFieldActionPerformed(evt);
+                editOrgDataButtonActionPerformed(evt);
             }
         });
 
@@ -77,57 +75,45 @@ public class MenuUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(importButton)
                     .addComponent(newOsButton)
                     .addComponent(titleLabel)
                     .addComponent(LogoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(importFontField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editOrgDataButton))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {importButton, newOsButton});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {importFontField, titleLabel});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {editOrgDataButton, newOsButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(LogoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(titleLabel)
-                .addGap(44, 44, 44)
-                .addComponent(importFontField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(importButton)
+                .addGap(34, 34, 34)
+                .addComponent(editOrgDataButton)
                 .addGap(18, 18, 18)
                 .addComponent(newOsButton)
-                .addGap(48, 48, 48))
+                .addGap(84, 84, 84))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
-        // TODO add your handling code here:
-        mudaJanelaClientInfo();
-    }//GEN-LAST:event_importButtonActionPerformed
-
     private void newOsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newOsButtonActionPerformed
         // TODO add your handling code here:
-        mudaJanelaClientInfo();
+        OS_Generator.menu.setVisible(false);
+        OS_Generator.clientData.setVisible(true);
         OS_Generator.clientData.resetaCampos();
     }//GEN-LAST:event_newOsButtonActionPerformed
 
-    private void mudaJanelaClientInfo(){
-        OS_Generator.clientData.setVisible(true);
-        OS_Generator.menu.setVisible(false);
-    }
-    
-    private void importFontFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importFontFieldActionPerformed
+    private void editOrgDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editOrgDataButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_importFontFieldActionPerformed
-
+        OS_Generator.menu.setVisible(false);
+        OS_Generator.orgData.setVisible(true);
+    }//GEN-LAST:event_editOrgDataButtonActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -144,30 +130,24 @@ public class MenuUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MenuUI().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LogoPanel;
-    private javax.swing.JButton importButton;
-    private javax.swing.JTextField importFontField;
+    private javax.swing.JButton editOrgDataButton;
     private javax.swing.JButton newOsButton;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

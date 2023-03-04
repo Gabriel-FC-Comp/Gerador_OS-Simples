@@ -4,8 +4,6 @@
  */
 package os_generator;
 
-import java.awt.Component;
-
 /**
  *
  * @author gabif

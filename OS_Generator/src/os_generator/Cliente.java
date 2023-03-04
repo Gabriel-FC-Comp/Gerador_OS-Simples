@@ -25,7 +25,7 @@ public class Cliente {
         setAno(ano);
         setMotor(motor);
     }
-
+    
     private void setAno(int ano) {
         this.ano = ano;
     }
