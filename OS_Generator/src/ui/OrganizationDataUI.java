@@ -4,7 +4,11 @@
  */
 package ui;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import os_generator.ManipuladorArquivos;
 import os_generator.OS_Generator;
 
 /**
@@ -43,7 +47,6 @@ public class OrganizationDataUI extends javax.swing.JFrame {
         whatsappLabel = new javax.swing.JLabel();
         scaleLabel = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
-        importButton = new javax.swing.JButton();
         cleanButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,13 +78,6 @@ public class OrganizationDataUI extends javax.swing.JFrame {
             }
         });
 
-        importButton.setText("Importar Ultimo");
-        importButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importButtonActionPerformed(evt);
-            }
-        });
-
         cleanButton.setText("Limpar");
         cleanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,22 +106,16 @@ public class OrganizationDataUI extends javax.swing.JFrame {
                                     .addComponent(addressLabel)
                                     .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cepLabel)
-                                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(whatsappField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(saveButton)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(importButton)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(cleanButton))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(3, 3, 3)
-                                                .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(59, 59, 59)
+                                        .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(saveButton)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cleanButton)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap(53, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -153,14 +143,14 @@ public class OrganizationDataUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cepLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(phoneLabel)
                     .addComponent(scaleLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(whatsappLabel)
@@ -169,8 +159,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
-                    .addComponent(cleanButton)
-                    .addComponent(importButton))
+                    .addComponent(cleanButton))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -179,47 +168,62 @@ public class OrganizationDataUI extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        if(scaleField.getText().isBlank() || orgNameField.getText().isBlank() ||
-                addressField.getText().isBlank() || cepField.getText().isBlank()){
-            try{
-                float escala = Float.parseFloat(scaleField.getText());
-                OS_Generator.atualizaEmpresa(orgNameField.getText(), 
-                        addressField.getText(), cepField.getText(), 
-                        phoneField.getText(), whatsappField.getText(), 
+        if (!scaleField.getText().isBlank() && !orgNameField.getText().isBlank() && 
+                !addressField.getText().isBlank() && !cepField.getText().isBlank()) {
+            try {
+                float escala = Float.parseFloat(scaleField.getText().replace(",", "."));
+                OS_Generator.atualizaEmpresa(orgNameField.getText(),
+                        addressField.getText(), phoneField.getText(),
+                        cepField.getText(), whatsappField.getText(),
                         escala);
+
+                try {
+                    ManipuladorArquivos.salvaDadosOrg();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null,
+                            "Erro - Falha ao salvar os dados da organização!",
+                            "Warning - Error", 0);
+                    Logger.getLogger(OrganizationDataUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 OS_Generator.orgData.setVisible(false);
                 OS_Generator.menu.habilitaNewOSButton();
                 OS_Generator.menu.setVisible(true);
-            }catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(null, 
-                        "Erro - Escala da logo inválida", 
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Erro - Escala da logo inválida",
                         "Warning - Error", 0);
             }// try-catch
-        }else{
-            JOptionPane.showMessageDialog(null, 
-                    "Por favor, preencha todos os campos obrigatórios!", 
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Por favor, preencha todos os campos obrigatórios!",
                     "Warning", 0);
         }// if-else
-        
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanButtonActionPerformed
         // TODO add your handling code here:
         orgNameField.setText("");
         addressField.setText("");
-        cepField.setText("");
         phoneField.setText("");
+        cepField.setText("");
         whatsappField.setText("");
         scaleField.setText("");
     }//GEN-LAST:event_cleanButtonActionPerformed
 
+    public void preencheCamposImportados() {
+        orgNameField.setText(OS_Generator.orgInfo.getNome());
+        addressField.setText(OS_Generator.orgInfo.getEndereco());
+        phoneField.setText(OS_Generator.orgInfo.getCep());
+        cepField.setText(OS_Generator.orgInfo.getTelefone());
+        whatsappField.setText(OS_Generator.orgInfo.getWhatsapp());
+        scaleField.setText(Float.toString(OS_Generator.orgInfo.getEscalaLogo()));
+    }
+
     private void scaleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scaleFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_scaleFieldActionPerformed
-
-    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_importButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,6 +256,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new OrganizationDataUI().setVisible(true);
+            
         });
     }
 
@@ -261,7 +266,6 @@ public class OrganizationDataUI extends javax.swing.JFrame {
     private javax.swing.JTextField cepField;
     private javax.swing.JLabel cepLabel;
     private javax.swing.JButton cleanButton;
-    private javax.swing.JButton importButton;
     private javax.swing.JTextField orgNameField;
     private javax.swing.JLabel orgNameLabel;
     private javax.swing.JTextField phoneField;

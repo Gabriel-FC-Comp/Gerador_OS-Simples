@@ -4,6 +4,9 @@
  */
 package os_generator;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,29 +20,29 @@ import javax.swing.JOptionPane;
  * @author gabif
  */
 public class ManipuladorArquivos {
-    
-    private static FileWriter arquivo;
-    private static PrintWriter escritor;
-    
-    public static void criaArquivoTex(String nomeArquivo){
+
+    private static FileWriter arquivoTex;
+    private static PrintWriter escritorTex;
+
+    public static void criaArquivoTex(String nomeArquivo) {
         try {
-            ManipuladorArquivos.arquivo = new FileWriter(nomeArquivo);
-            ManipuladorArquivos.escritor = new PrintWriter(arquivo);
-            
+            ManipuladorArquivos.arquivoTex = new FileWriter(nomeArquivo);
+            ManipuladorArquivos.escritorTex = new PrintWriter(arquivoTex);
+
             escreveCabecalho();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
-            
-            JOptionPane.showMessageDialog(null, 
-                    "Erro - Problema na criação do arquivo!", 
+
+            JOptionPane.showMessageDialog(null,
+                    "Erro - Problema na criação do arquivo!",
                     "Warning - Error", 0);
         }
-        
+
     }
-    
-    private static void escreveCabecalho(){
-        ManipuladorArquivos.escritor.printf("""
+
+    private static void escreveCabecalho() {
+        ManipuladorArquivos.escritorTex.printf("""
                         \\documentclass{article}
                         \\usepackage[utf8]{inputenc}
                         \\usepackage[left=1.5cm,top=1.5cm,right=1.5cm,bottom=1.5cm]{geometry}
@@ -66,27 +69,26 @@ public class ManipuladorArquivos {
                         
                         \\vspace{1cm}
                         """, OS_Generator.orgInfo.getEscalaLogo(),
-                        OS_Generator.orgInfo.getNome(),OS_Generator.orgInfo.getEndereco(),
-                        OS_Generator.orgInfo.getCep(), OS_Generator.orgInfo.getTelefone(),
-                        OS_Generator.orgInfo.getWhatsapp());
+                OS_Generator.orgInfo.getNome(), OS_Generator.orgInfo.getEndereco(),
+                OS_Generator.orgInfo.getCep(), OS_Generator.orgInfo.getTelefone(),
+                OS_Generator.orgInfo.getWhatsapp());
     }
 
-    
-    public static void escreveDadosCliente(Cliente cliente){
-        ManipuladorArquivos.escritor.printf("""
+    public static void escreveDadosCliente(Cliente cliente) {
+        ManipuladorArquivos.escritorTex.printf("""
                         \\begin{tabular}{llllll}
                             \\textbf{Cliente:} & %s & \\textbf{Condutor:} & \\multicolumn{3}{l}{%s} \\\\
                             \\textbf{Veículo:} & %s & \\textbf{Placa:} & %s & \\textbf{Ano:} & %d \\\\
                         \\end{tabular}
                         
                         \\vspace{1cm}
-                        """, cliente.getNome(), cliente.getNomeCondutor(), 
-                        cliente.getVeiculo(), cliente.getPlaca(), cliente.getAno());
+                        """, cliente.getNome(), cliente.getNomeCondutor(),
+                cliente.getVeiculo(), cliente.getPlaca(), cliente.getAno());
     }
 
-    public static void escreveProdutos(ArrayList<ItemOS> produtos){
-        
-        ManipuladorArquivos.escritor.printf("""
+    public static void escreveProdutos(ArrayList<ItemOS> produtos) {
+
+        ManipuladorArquivos.escritorTex.printf("""
                         {\\large\\textbf{Peças:}}
                         
                         \\vspace{1cm}
@@ -94,25 +96,25 @@ public class ManipuladorArquivos {
                             \\textbf{Quantidade} & \\textbf{Produto}\\hspace{8.23cm} & \\textbf{Preço (R\\$)}\\\\
                         
                         """);
-        
+
         for (ItemOS produto : produtos) {
-            ManipuladorArquivos.escritor.printf("%d & %s & %.2f \\\\\n", 
-                produto.getQuantidade(), produto.getDescricao(),produto.getValorTT());
+            ManipuladorArquivos.escritorTex.printf("%d & %s & %.2f \\\\\n",
+                    produto.getQuantidade(), produto.getDescricao(), produto.getValorTT());
         }
-        
-        ManipuladorArquivos.escritor.printf("""
+
+        ManipuladorArquivos.escritorTex.printf("""
                         
                         \\end{tabular}
                         
                         \\vspace{1cm}
                         
                         """);
-        
+
     }
-    
-    public static void escreveServicos(ArrayList<ItemOS> servicos){
-        
-        ManipuladorArquivos.escritor.printf("""
+
+    public static void escreveServicos(ArrayList<ItemOS> servicos) {
+
+        ManipuladorArquivos.escritorTex.printf("""
                         {\\large\\textbf{Serviços:}}
                             
                             \\vspace{1cm}
@@ -120,25 +122,25 @@ public class ManipuladorArquivos {
                                 \\textbf{Quantidade} & \\textbf{Serviço}\\hspace{8.5cm} & \\textbf{Preço (R\\$)}\\\\
                         
                         """);
-        
+
         for (ItemOS servico : servicos) {
-            ManipuladorArquivos.escritor.printf("%d & %s & %.2f \\\\\n", 
-                servico.getQuantidade(), servico.getDescricao(),servico.getValorTT());
+            ManipuladorArquivos.escritorTex.printf("%d & %s & %.2f \\\\\n",
+                    servico.getQuantidade(), servico.getDescricao(), servico.getValorTT());
         }
-        
-        ManipuladorArquivos.escritor.printf("""
+
+        ManipuladorArquivos.escritorTex.printf("""
                         
                         \\end{tabular}
                         
                         \\vspace{1cm}
                         
                         """);
-        
+
         finalizaDados();
     }
-    
-    private static void finalizaDados(){
-        ManipuladorArquivos.escritor.printf("""
+
+    private static void finalizaDados() {
+        ManipuladorArquivos.escritorTex.printf("""
                         \\begin{tabular}{ll}
                             \\textbf{Total Peças:} & R\\$ %.2f \\\\
                             \\textbf{Total Serviços:} & R\\$ %.2f \\\\
@@ -150,25 +152,69 @@ public class ManipuladorArquivos {
                         
                         \\end{document}
                         """, OS_Generator.getTTprodutos(), OS_Generator.getTTservicos(),
-                        OS_Generator.getTT());
+                OS_Generator.getTT());
 
-    }    
-        
-    public static void fechaArquivo(){
+    }
+
+    public static void fechaArquivoTex() {
         try {
-            ManipuladorArquivos.arquivo.close();
-            ManipuladorArquivos.arquivo = null;
-            ManipuladorArquivos.escritor = null;
-            
-            JOptionPane.showMessageDialog(null, 
-                    "Seu arquivo foi gerado com sucesso!", 
-                    "Passando para avisar...",0);
+            ManipuladorArquivos.arquivoTex.close();
+            ManipuladorArquivos.arquivoTex = null;
+            ManipuladorArquivos.escritorTex = null;
+
+            JOptionPane.showMessageDialog(null,
+                    "Seu arquivo foi gerado com sucesso!",
+                    "Passando para avisar...", 0);
         } catch (IOException ex) {
             Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
-            
-            JOptionPane.showMessageDialog(null, 
-                    "Erro - Problema ao salvar o arquivo!", 
+
+            JOptionPane.showMessageDialog(null,
+                    "Erro - Problema ao salvar o arquivo!",
                     "Warning - Error", 0);
+        }
+
+    }
+
+    public static void salvaDadosOrg() throws IOException {
+        
+        FileWriter arquivo;
+        String endereco = System.getProperty("java.class.path");
+        arquivo = new FileWriter(endereco + "\\dadosOrg.txt");
+        PrintWriter escritor = new PrintWriter(arquivo);
+        escritor.printf("""
+                            %s |%s |%s |%s |%s |%f
+                            """, OS_Generator.orgInfo.getNome(),
+                OS_Generator.orgInfo.getEndereco(), OS_Generator.orgInfo.getCep(),
+                OS_Generator.orgInfo.getTelefone(), OS_Generator.orgInfo.getWhatsapp(),
+                OS_Generator.orgInfo.getEscalaLogo());
+        arquivo.close();
+        arquivo = null;
+        escritor = null;
+
+    }
+
+    public static void importaDadosOrg(){
+        
+        try {
+            FileReader arquivo;
+            String endereco = System.getProperty("java.class.path");
+            arquivo = new FileReader(endereco + "\\dadosOrg.txt");
+            BufferedReader leitor = new BufferedReader(arquivo);
+            
+            String[] dados = leitor.readLine().split("\\|");
+            
+            OS_Generator.atualizaEmpresa(dados[0],dados[1],dados[2],dados[3],dados[4],
+                    Float.parseFloat(dados[5].replace(",", ".")));
+            OS_Generator.orgData.preencheCamposImportados();
+            
+            arquivo.close();
+            dados = null;
+            arquivo = null;
+            leitor = null;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

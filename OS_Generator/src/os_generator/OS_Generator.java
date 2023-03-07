@@ -26,6 +26,7 @@ public class OS_Generator {
         // TODO code application logic here
         menu.setVisible(true);
         OS_Generator.menu.desabilitaNewOSButton();
+        ManipuladorArquivos.importaDadosOrg();
     }
     
     public static void atualizaCliente(String nome, String nomeCondutor, String veiculo, String placa, int ano, String motor){
@@ -60,7 +61,7 @@ public class OS_Generator {
         ManipuladorArquivos.escreveDadosCliente(clientInfo);
         ManipuladorArquivos.escreveProdutos(produtos);
         ManipuladorArquivos.escreveServicos(servicos);
-        ManipuladorArquivos.fechaArquivo();
+        ManipuladorArquivos.fechaArquivoTex();
     }
     
 }
