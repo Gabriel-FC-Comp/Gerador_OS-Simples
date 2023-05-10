@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import os_generator.ItemOS;
@@ -24,7 +25,47 @@ public class FactoryUI extends javax.swing.JFrame {
     public FactoryUI() {
         initComponents();
     }
-
+    
+    public void setCoresUI(Color background1, Color background2, Color button1, 
+            Color button2, Color labels1, Color labels2, Color button1Label,
+            Color button2Label){
+        
+        this.getContentPane().setBackground(background1);
+        this.infoPanel.setBackground(background2);
+        
+        this.editaProdButton.setBackground(button1);
+        this.editaProdButton.setForeground(button1Label);
+        this.editaServButton.setBackground(button1);
+        this.editaServButton.setForeground(button1Label);
+        this.excluiProdButton.setBackground(button1);
+        this.excluiProdButton.setForeground(button1Label);
+        this.excluiServButton.setBackground(button1);
+        this.voltarButton.setBackground(button1);
+        this.voltarButton.setForeground(button1Label);
+        this.exportaButton.setBackground(button1);
+        this.exportaButton.setForeground(button1Label);
+        
+        this.addItemButton.setBackground(button2);
+        this.addItemButton.setForeground(button2Label);
+        
+        this.servicoButton.setBackground(background2);
+        this.servicoButton.setForeground(labels2);
+        this.produtoButton.setBackground(background2);
+        this.produtoButton.setForeground(labels2);
+        
+        this.totalProdLabel.setForeground(labels1);
+        this.totalServLabel.setForeground(labels1);
+        this.totalLabel.setForeground(labels1);
+        this.precoProdLabel.setForeground(labels1);
+        this.precoServLabel.setForeground(labels1);
+        
+        this.tipoLabel.setForeground(labels2);
+        this.valorLabel.setForeground(labels2);
+        this.descricaoLabel.setForeground(labels2);
+        this.qtdeLabel.setForeground(labels2);
+        this.infoTitleLabel.setForeground(labels2);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -353,8 +394,8 @@ public class FactoryUI extends javax.swing.JFrame {
     }
     
     private void atualizaTT(){
-        totalProdLabel.setText("R$"+OS_Generator.getTTprodutos());
-        totalServLabel.setText("R$"+OS_Generator.getTTservicos());
+        precoProdLabel.setText("R$"+OS_Generator.getTTprodutos());
+        precoServLabel.setText("R$"+OS_Generator.getTTservicos());
         totalLabel.setText("Total: R$"+OS_Generator.getTT());
     }
     
@@ -394,10 +435,7 @@ public class FactoryUI extends javax.swing.JFrame {
 
     private void exportaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportaButtonActionPerformed
         // TODO add your handling code here:
-        OS_Generator.exportaArquivoTex(
-        JOptionPane.showInputDialog(null, 
-                "Insira o caminho onde o arquivo será salvo:", 
-                "OS_Generator", 0));
+        OS_Generator.exportaArquivo();
     }//GEN-LAST:event_exportaButtonActionPerformed
 
     private void voltarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButtonActionPerformed

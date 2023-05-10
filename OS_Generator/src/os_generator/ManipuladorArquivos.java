@@ -4,7 +4,10 @@
  */
 package os_generator;
 
+import de.nixosoft.jlr.JLRGenerator;
+import de.nixosoft.jlr.JLROpener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -158,6 +161,7 @@ public class ManipuladorArquivos {
 
     public static void fechaArquivoTex() {
         try {
+            
             ManipuladorArquivos.arquivoTex.close();
             ManipuladorArquivos.arquivoTex = null;
             ManipuladorArquivos.escritorTex = null;
@@ -174,22 +178,43 @@ public class ManipuladorArquivos {
         }
 
     }
-
+    
+    public static void geraPDF(String caminhoArquivoTex){
+        // Trecho adaptado de https://www.nixo-soft.de/jlrtutorial/
+            
+        try {
+            JLRGenerator geradorPdf = new JLRGenerator();
+            
+            File workDirectory = new File(System.getProperty("user.home") +
+                    File.separator + "Downloads");
+            File outputPath = new File(caminhoArquivoTex);
+            File arquivo = new File(caminhoArquivoTex + File.separator + "main.tex");
+            
+            geradorPdf.generate(arquivo, outputPath, outputPath);
+            File pdf1 = geradorPdf.getPDF();
+            JLROpener.open(pdf1);
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro - Problema na geração do PDF!", 
+                    "Warning - Error", 0);
+            Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void salvaDadosOrg() throws IOException {
         
         FileWriter arquivo;
-        String endereco = System.getProperty("java.class.path");
-        arquivo = new FileWriter(endereco + "\\dadosOrg.txt");
+
+        arquivo = new FileWriter(System.getProperty("user.dir") 
+                    + File.separator + File.separator + "dadosOrg.txt");
         PrintWriter escritor = new PrintWriter(arquivo);
         escritor.printf("""
-                            %s |%s |%s |%s |%s |%f
+                            %s |%s |%s |%s |%s |%f |%s
                             """, OS_Generator.orgInfo.getNome(),
                 OS_Generator.orgInfo.getEndereco(), OS_Generator.orgInfo.getCep(),
                 OS_Generator.orgInfo.getTelefone(), OS_Generator.orgInfo.getWhatsapp(),
-                OS_Generator.orgInfo.getEscalaLogo());
+                OS_Generator.orgInfo.getEscalaLogo(),OS_Generator.caminho);
         arquivo.close();
-        arquivo = null;
-        escritor = null;
 
     }
 
@@ -197,8 +222,8 @@ public class ManipuladorArquivos {
         
         try {
             FileReader arquivo;
-            String endereco = System.getProperty("java.class.path");
-            arquivo = new FileReader(endereco + "\\dadosOrg.txt");
+            arquivo = new FileReader(System.getProperty("user.dir") 
+                    + File.separator + "dadosOrg.txt");
             BufferedReader leitor = new BufferedReader(arquivo);
             
             String[] dados = leitor.readLine().split("\\|");
@@ -206,11 +231,10 @@ public class ManipuladorArquivos {
             OS_Generator.atualizaEmpresa(dados[0],dados[1],dados[2],dados[3],dados[4],
                     Float.parseFloat(dados[5].replace(",", ".")));
             OS_Generator.orgData.preencheCamposImportados();
+            Configuracoes.setCaminho(dados[6]);
             
             arquivo.close();
-            dados = null;
-            arquivo = null;
-            leitor = null;
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ManipuladorArquivos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

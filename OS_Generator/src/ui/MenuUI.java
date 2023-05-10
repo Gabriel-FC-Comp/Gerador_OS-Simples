@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
+import java.awt.Color;
 import os_generator.OS_Generator;
 /**
  *
@@ -16,7 +17,21 @@ public class MenuUI extends javax.swing.JFrame {
     public MenuUI() {
         initComponents();
     }
-
+    
+    public void setCoresUI(Color background, Color labels, Color button,
+            Color buttonLabel){
+        
+        this.getContentPane().setBackground(background);
+        this.titleLabel.setForeground(labels);
+        
+        this.editOrgDataButton.setBackground(button);
+        this.editOrgDataButton.setForeground(buttonLabel);
+        this.newOsButton.setBackground(button);
+        this.newOsButton.setForeground(buttonLabel);
+        this.configButton.setBackground(button);
+        this.configButton.setForeground(buttonLabel);
+    }
+    
     public void habilitaNewOSButton(){
         OS_Generator.menu.newOsButton.setEnabled(true);
     }
@@ -37,6 +52,7 @@ public class MenuUI extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         LogoPanel = new javax.swing.JPanel();
         editOrgDataButton = new javax.swing.JButton();
+        configButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 350));
@@ -68,6 +84,13 @@ public class MenuUI extends javax.swing.JFrame {
             }
         });
 
+        configButton.setText("Configurações");
+        configButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,11 +101,12 @@ public class MenuUI extends javax.swing.JFrame {
                     .addComponent(newOsButton)
                     .addComponent(titleLabel)
                     .addComponent(LogoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editOrgDataButton))
+                    .addComponent(editOrgDataButton)
+                    .addComponent(configButton))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {editOrgDataButton, newOsButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {configButton, editOrgDataButton, newOsButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +119,9 @@ public class MenuUI extends javax.swing.JFrame {
                 .addComponent(editOrgDataButton)
                 .addGap(18, 18, 18)
                 .addComponent(newOsButton)
-                .addGap(84, 84, 84))
+                .addGap(18, 18, 18)
+                .addComponent(configButton)
+                .addGap(43, 43, 43))
         );
 
         pack();
@@ -113,6 +139,12 @@ public class MenuUI extends javax.swing.JFrame {
         OS_Generator.menu.setVisible(false);
         OS_Generator.orgData.setVisible(true);
     }//GEN-LAST:event_editOrgDataButtonActionPerformed
+
+    private void configButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configButtonActionPerformed
+        // TODO add your handling code here:
+        OS_Generator.menu.setVisible(false);
+        OS_Generator.configUi.setVisible(true);
+    }//GEN-LAST:event_configButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -147,6 +179,7 @@ public class MenuUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LogoPanel;
+    private javax.swing.JButton configButton;
     private javax.swing.JButton editOrgDataButton;
     private javax.swing.JButton newOsButton;
     private javax.swing.JLabel titleLabel;

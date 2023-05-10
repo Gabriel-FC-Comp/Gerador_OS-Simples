@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import os_generator.OS_Generator;
 
@@ -20,6 +21,27 @@ public class ClientDataUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void setCoresUI(Color background, Color labels, Color button,
+            Color buttonLabel){
+        
+        this.getContentPane().setBackground(background);
+        
+        this.titleLabel.setForeground(labels);
+        this.clienteLabel.setForeground(labels);
+        this.condutorLabel.setForeground(labels);
+        this.veiculoLabel.setForeground(labels);
+        this.placaLabel.setForeground(labels);
+        this.anoLabel.setForeground(labels);
+        this.motorLabel.setForeground(labels);
+        
+        this.avancarButton.setBackground(button);
+        this.avancarButton.setForeground(buttonLabel);
+        
+        this.voltarButton.setBackground(button);
+        this.voltarButton.setForeground(buttonLabel);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

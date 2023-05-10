@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,27 @@ public class OrganizationDataUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void setCoresUI(Color background, Color labels, Color button,
+            Color buttonLabel){
+        
+        this.getContentPane().setBackground(background);
+        
+        this.titleLabel.setForeground(labels);
+        this.orgNameLabel.setForeground(labels);
+        this.addressLabel.setForeground(labels);
+        this.cepLabel.setForeground(labels);
+        this.phoneLabel.setForeground(labels);
+        this.scaleLabel.setForeground(labels);
+        this.whatsappLabel.setForeground(labels);
+        
+        this.saveButton.setBackground(button);
+        this.saveButton.setForeground(buttonLabel);
+        this.cleanButton.setBackground(button);
+        this.cleanButton.setForeground(buttonLabel);
+        
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,7 +61,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
         phoneField = new javax.swing.JTextField();
         whatsappField = new javax.swing.JTextField();
         scaleField = new javax.swing.JTextField();
-        titleLable = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         orgNameLabel = new javax.swing.JLabel();
         addressLabel = new javax.swing.JLabel();
         cepLabel = new javax.swing.JLabel();
@@ -57,7 +79,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
             }
         });
 
-        titleLable.setText("Dados da empresa:");
+        titleLabel.setText("Dados da empresa:");
 
         orgNameLabel.setText("Nome da empresa:*");
 
@@ -94,7 +116,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(orgNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(phoneLabel)
@@ -131,7 +153,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(titleLable)
+                .addComponent(titleLabel)
                 .addGap(30, 30, 30)
                 .addComponent(orgNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,7 +295,7 @@ public class OrganizationDataUI extends javax.swing.JFrame {
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField scaleField;
     private javax.swing.JLabel scaleLabel;
-    private javax.swing.JLabel titleLable;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField whatsappField;
     private javax.swing.JLabel whatsappLabel;
     // End of variables declaration//GEN-END:variables
