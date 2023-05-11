@@ -19,14 +19,26 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Classe que organiza e retém os métodos e variáveis referentes a leitura e escrita
+ * de arquivos necessárias no programa.
  * @author gabif
  */
 public class ManipuladorArquivos {
 
+    /**
+     * Variável para manter o arquivo da OS que será exportado configurado.
+     */
     private static FileWriter arquivoTex;
+    /**
+     * Variável para escrever no arquivo da OS que sera exportado.
+     */
     private static PrintWriter escritorTex;
 
+    /**
+     * Metodo que cria o arquivo da OS que será exportado, abrindo-o e deixando-o
+     * disponível para gravação da configuração e layout da OS.
+     * @param nomeArquivo Caminho do arquivo, contendo o nome do mesmo no final do caminho.
+     */
     public static void criaArquivoTex(String nomeArquivo) {
         try {
             ManipuladorArquivos.arquivoTex = new FileWriter(nomeArquivo);
@@ -44,6 +56,10 @@ public class ManipuladorArquivos {
 
     }
 
+    /**
+     * Método que mantém os comandos e configurações que representarão o cabeçalho e parte inicial
+     * da OS, escrevendo-os no arquivo de saída.
+     */
     private static void escreveCabecalho() {
         ManipuladorArquivos.escritorTex.printf("""
                         \\documentclass{article}
@@ -77,6 +93,11 @@ public class ManipuladorArquivos {
                 OS_Generator.orgInfo.getWhatsapp());
     }
 
+    /**
+     * Método que mantém os comandos e configurações que representarão os dados do cliente
+     * na OS, escrevendo-os no arquivo de saída.
+     * @param cliente Array contendo os dados do cliente que a OS é destinada.
+     */
     public static void escreveDadosCliente(Cliente cliente) {
         ManipuladorArquivos.escritorTex.printf("""
                         \\begin{tabular}{llllll}
@@ -89,6 +110,11 @@ public class ManipuladorArquivos {
                 cliente.getVeiculo(), cliente.getPlaca(), cliente.getAno());
     }
 
+    /**
+     * Método que mantém os comandos e configurações que representarão a tabela e dados
+     * dos produtos na OS, escrevendo-os no arquivo de saída.
+     * @param produtos Array contendo os dados dos itens da OS que são produtos.
+     */
     public static void escreveProdutos(ArrayList<ItemOS> produtos) {
 
         ManipuladorArquivos.escritorTex.printf("""
@@ -115,6 +141,11 @@ public class ManipuladorArquivos {
 
     }
 
+    /**
+     * Método que mantém os comandos e configurações que representarão a tabela e dados
+     * dos serviços na OS, escrevendo-os no arquivo de saída.
+     * @param servicos Refere-se ao Array contendo os dados dos itens da OS que são serviços.
+     */
     public static void escreveServicos(ArrayList<ItemOS> servicos) {
 
         ManipuladorArquivos.escritorTex.printf("""
@@ -142,6 +173,10 @@ public class ManipuladorArquivos {
         finalizaDados();
     }
 
+    /**
+     * Método que mantém os comandos e configurações que representarão a parte final,
+     * notas de rodapé e partes finais da OS, escrevendo-os no arquivo de saída.
+     */
     private static void finalizaDados() {
         ManipuladorArquivos.escritorTex.printf("""
                         \\begin{tabular}{ll}
@@ -159,6 +194,10 @@ public class ManipuladorArquivos {
 
     }
 
+    /**
+     * Método que fecha o arquivo da OS, finalizando sua exportação e liberando
+     * a memória alocada para mantê-lo aberto.
+     */
     public static void fechaArquivoTex() {
         try {
             
@@ -179,6 +218,11 @@ public class ManipuladorArquivos {
 
     }
     
+    /**
+     * Método Experimental (Não Funcional) tentando integrar a geração automatica
+     * do PDF ao invés de apenas gerar o Arquivo TEX.
+     * @param caminhoArquivoTex 
+     */
     public static void geraPDF(String caminhoArquivoTex){
         // Trecho adaptado de https://www.nixo-soft.de/jlrtutorial/
             
@@ -201,6 +245,13 @@ public class ManipuladorArquivos {
         }
     }
     
+    /**
+     * Método utilizado para gerar o arquivo de configuração, salvando os 
+     * dados atuais da empresa para que não seja necessário reescrevê-los toda
+     * reinicialização do programa.
+     * @throws IOException Caso haja um erro na abertura ou escrita do arquivo de
+     * configurações emite a Exception.
+     */
     public static void salvaDadosOrg() throws IOException {
         
         FileWriter arquivo;
@@ -218,6 +269,10 @@ public class ManipuladorArquivos {
 
     }
 
+    /**
+     * Método utilizado para importar e atualizar os dados atuais da empresa no programa
+     * a partir do arquivo de configuração salvo.
+     */
     public static void importaDadosOrg(){
         
         try {
